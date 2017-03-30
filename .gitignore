@@ -2,4 +2,3 @@ node_modules/
 app/.sass-cache/
 *.map
 *.DS_Store
-*.map
