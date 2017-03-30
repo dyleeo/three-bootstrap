@@ -90,15 +90,18 @@ gulp.task('sass-lint', function() {
       .pipe( sassLint.failOnError() );
 });
 
+let cache;
 
-
-gulp.task('buildJS', [ 'jshint', 'modernizr' ], function(){
+//BUILD JS
+gulp.task('bundleJS', function(){
   return rollup({
     format: "umd", //umd,amd,cjs
     moduleName: "mainBundle", //only for umd
     exports: "named",
     entry: "./app/javascript/main.js",
     sourceMap: true,
+    useStrict: true,
+    cache: cache,
     plugins: [
       nodeResolve({
         jsnext: true,
@@ -116,8 +119,11 @@ gulp.task('buildJS', [ 'jshint', 'modernizr' ], function(){
       includePaths({
         paths: [ './app/javascript/' ]
       }),
-      uglify({}, minify )
+      //uglify({}, minify )
     ]
+  })
+  .on('bundle', function(bundle) {
+    cache = bundle;
   })
   .pipe( source( 'main.js', './app/javascript' ) )
   .pipe( buffer() )
@@ -126,11 +132,10 @@ gulp.task('buildJS', [ 'jshint', 'modernizr' ], function(){
   .pipe( rename('bundle.js' ) )
   .pipe( sourcemaps.write('.') )
   .pipe( gulp.dest('./pub/javascript') )
-  .on('end', function() {
-    del(['./app/javascript/modernizr.js']);
-  });
-
+  .pipe(connect.reload());
 });
+
+
 
 gulp.task('serve', [ 'build', 'watch'], function(){
   connect.server({
@@ -145,10 +150,13 @@ gulp.task('reload', function(){
   connect.reload();
 });
 
-gulp.task('build', ['images', 'html', 'sass', 'buildJS']);
+gulp.task('build', ['images', 'html', 'sass', 'modernizr', 'bundleJS'], function(){
+  return del(['./app/javascript/modernizr.js' ]);
+});
+
 
 gulp.task('watch', function(){
   gulp.watch('./app/**/*.html', ['html']);
-  gulp.watch('./app/javascript/**/*.js', ['buildJS', 'reload']);
+  gulp.watch('./app/javascript/**/*.js', ['bundleJS', 'reload']);
   gulp.watch('./app/scss/**/*.scss', ['sass', 'sass-lint', 'reload']);
 });
