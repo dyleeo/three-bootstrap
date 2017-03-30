@@ -10,7 +10,7 @@ const THREE = THREEJS.THREE;
 
 let init = () => {
   console.log("HELLO! ");
-
+  //test
   let scene = new THREE.Scene();
   console.log(THREE)
 
