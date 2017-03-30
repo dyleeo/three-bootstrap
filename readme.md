@@ -1,2 +1,2 @@
-# gulp-rollup-starter
-A quickstart setup to get prototyping... WIP
+# THREE.JS Bootstrap
+A quickstart setup to get prototyping... 
