@@ -4,8 +4,8 @@
   "description": "Rollup Bootstrap",
   "main": "gulpfile.js",
   "dependencies": {
-    "gsap": "^1.19.1",
-    "three.js": "^0.77.1"
+    "gsap": "*",
+    "three.js": "*"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.7",

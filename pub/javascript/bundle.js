@@ -10247,10 +10247,6 @@ var _gsScope = ('object' !== "undefined" && module.exports && typeof(global) !==
 }());
 });
 
-var testObj = function () {
-  console.log("TESSSST!!!");
-};
-
 var three = createCommonjsModule(function (module, exports) {
 var self = self || {};// File:src/Three.js
 
@@ -52202,13 +52198,52 @@ var three_1 = three.THREE;
 var THREE$$1 = three_1;
 
 
+var scene;
+var camera;
+var renderer;
+var geometry;
+var material;
+var cube;
+
 var init = function () {
-  console.log("HELLO! ");
+  'use strict';
 
-  var scene = new THREE$$1.Scene();
-  console.log(THREE$$1);
+  scene = new THREE$$1.Scene();
+  camera = new THREE$$1.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+  renderer = new THREE$$1.WebGLRenderer({antialiasing:true});
+  renderer.setSize( window.innerWidth, window.innerHeight );
+  renderer.setPixelRatio(window.devicePixelRatio ? window.devicePixelRatio : 1);
+  document.body.appendChild( renderer.domElement );
 
-  testObj();
+  geometry = new THREE$$1.BoxGeometry( 1, 1, 1 );
+  material = new THREE$$1.MeshBasicMaterial( { color: 0x00ff00 } );
+  cube = new THREE$$1.Mesh( geometry, material );
+  scene.add( cube );
+
+  camera.position.z = 5;
+
+  var render = function () {
+    requestAnimationFrame( render );
+
+    cube.rotation.x += 0.01;
+    cube.rotation.y += 0.01;
+
+    renderer.render(scene, camera);
+  };
+
+  render();
+
+  window.addEventListener( 'resize', onWindowResize, false );
+
+  function onWindowResize(){
+
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+
+      renderer.setSize( window.innerWidth, window.innerHeight );
+
+  }
+  //testObj();
 
 };
 
