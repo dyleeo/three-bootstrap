@@ -15,12 +15,14 @@ const rename = require('gulp-rename');
 const connect = require('gulp-connect');
 const rollup = require('rollup-stream');
 const uglify = require('rollup-plugin-uglify');
+const minify = require('uglify-js-harmony').minify;
 const source = require('vinyl-source-stream');
 const buffer = require('vinyl-buffer');
 const includePaths = require('rollup-plugin-includepaths');
 const nodeResolve = require('rollup-plugin-node-resolve');
 const commonjs = require('rollup-plugin-commonjs');
 const modernizr = require('gulp-modernizr');
+
 
 
 gulp.task('default', [ 'watch' ]);
@@ -54,10 +56,9 @@ gulp.task('cleanImage', function(){
 
 gulp.task('images', ['cleanImage'], function(){
   return gulp.src('./app/images/**/*')
-  .pipe(changed('../images/optimized'))
+  .pipe( changed('./pub/images/optimized') )
   .pipe( image({ svgo: true }) )
   .pipe( gulp.dest( './pub/images/optimized' ) )
-  .pipe( gulp.dest( '../images/optimized' ) );
 });
 
 gulp.task('modernizr', function() {
@@ -89,7 +90,9 @@ gulp.task('sass-lint', function() {
       .pipe( sassLint.failOnError() );
 });
 
-gulp.task('buildJS', [ 'jshint', 'modernizr', 'images' ], function(){
+
+
+gulp.task('buildJS', [ 'jshint', 'modernizr' ], function(){
   return rollup({
     format: "umd", //umd,amd,cjs
     moduleName: "mainBundle", //only for umd
@@ -113,7 +116,7 @@ gulp.task('buildJS', [ 'jshint', 'modernizr', 'images' ], function(){
       includePaths({
         paths: [ './app/javascript/' ]
       }),
-      //uglify()
+      uglify({}, minify )
     ]
   })
   .pipe( source( 'main.js', './app/javascript' ) )

@@ -3,9 +3,9 @@ import TweenMax from 'gsap/TweenMax';
 import EasePack from 'gsap/EasePack';
 import testObj from './test.js';
 import * as THREEJS from 'three';
+
+
 const THREE = THREEJS.THREE;
-
-
 let scene, camera, renderer;
 let geometry, material, cube;
 
@@ -17,12 +17,12 @@ let init = () => {
   renderer = new THREE.WebGLRenderer({antialiasing:true});
   renderer.setSize( window.innerWidth, window.innerHeight );
   renderer.setPixelRatio(window.devicePixelRatio ? window.devicePixelRatio : 1);
-  document.body.appendChild( renderer.domElement );
-
+  document.querySelectorAll('section.main')[0].appendChild( renderer.domElement );
   geometry = new THREE.BoxGeometry( 1, 1, 1 );
   material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
   cube = new THREE.Mesh( geometry, material );
   scene.add( cube );
+
 
   camera.position.z = 5;
 
@@ -48,6 +48,7 @@ let init = () => {
 
   }
   //testObj();
+  
 
 };
 

@@ -1,5 +1,33 @@
 //------------------------------------------------
 //
+//  BASE SITE VARS
+//
+//------------------------------------------------
+
+//GENERAL PAGE LAYOUT/CHAR
+$base-bg-color: #000;
+$base-page-max-width: 1320px !default;
+$base-gutter: 2%;
+
+//------------------------------------------------
+//
+//  FONTS VARS
+//
+//------------------------------------------------
+
+//Font Weight
+$light: 100;
+$regular: 400;
+$bold: 600;
+
+// Base Font
+$base-font-family: sans-serif;
+$base-font-weight: $regular;
+$base-font-size: 13px;
+$base-line-height: 1.4;
+
+//------------------------------------------------
+//
 //  FLEXBOX GRID BREAKPOINTS
 //
 //------------------------------------------------
@@ -29,24 +57,3 @@ $breakpointmap: (
   'md': ( min-width: 62em ),
   'lg': ( min-width: 75em )
 );
-
-
-//------------------------------------------------
-//
-//  FONTS VARS
-//
-//------------------------------------------------
-
-//Font Weight
-$light: 100;
-$regular: 400;
-$bold: 600;
-
-// Base Font
-$base-font-family: sans-serif;
-$base-font-weight: $regular;
-$base-font-size: 13px;
-$base-line-height: 1.4;
-
-
-$base-bg-color: #000;

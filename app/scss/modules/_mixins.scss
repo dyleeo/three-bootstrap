@@ -12,9 +12,6 @@
     @media #{inspect(map-get($breakpointmap, $name))} {
       @content;
     }
-  } @else {
-    @warn 'No value available from `#{$breakpointmap}`. '
-    + 'Make sure it is defined in `$breakpointmap` map.';
   }
 }
 
