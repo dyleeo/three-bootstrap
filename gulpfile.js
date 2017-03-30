@@ -148,5 +148,4 @@ gulp.task('watch', function(){
   gulp.watch('./app/**/*.html', ['html']);
   gulp.watch('./app/javascript/**/*.js', ['buildJS', 'reload']);
   gulp.watch('./app/scss/**/*.scss', ['sass', 'sass-lint', 'reload']);
-  gulp.watch('app/images/**/*', {cwd:'./'}, ['images', 'reload']);
 });
