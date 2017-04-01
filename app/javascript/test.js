@@ -1,6 +1,6 @@
 
 
-export function test(){
+export function init(){
   console.log("YES");
 }
 
