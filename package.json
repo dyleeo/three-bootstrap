@@ -6,7 +6,7 @@
   "dependencies": {
     "gsap": "*",
     "stats.js": "^0.17.0",
-    "three.js": "*"
+    "three": "^0.87.1"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.7",

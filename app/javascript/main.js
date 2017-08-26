@@ -1,12 +1,9 @@
 //ROLLUP PACKAGE ALL VENDORS
 import {TweenMax, EasePack} from 'gsap';
-import * as THREEJS from 'three';
+import * as THREE from 'three';
 import Stats from 'stats.js';
 import testObj from './test.js';
 
-
-
-const THREE = THREEJS.THREE;
 let stats;
 let gui, guiData={testVal:0.1};
 let scene, camera, renderer;
