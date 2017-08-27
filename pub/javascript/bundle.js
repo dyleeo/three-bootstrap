@@ -50370,15 +50370,12 @@ u(++l%c.children.length);},!1);var k=(performance||Date).now(),g=k,a=0,r=e(new f
 b.fillRect(d,m,n,p);b.fillStyle=l;b.globalAlpha=.9;b.fillRect(d,m,n,p);return{dom:q,update:function(h,w){c=Math.min(c,h);k=Math.max(k,h);b.fillStyle=l;b.globalAlpha=1;b.fillRect(0,0,r,m);b.fillStyle=f;b.fillText(g(h)+" "+e+" ("+g(c)+"-"+g(k)+")",t,v);b.drawImage(q,d+a,m,n-a,p,d,m,n-a,p);b.fillRect(d+n-a,m,a,p);b.fillStyle=l;b.globalAlpha=.9;b.fillRect(d+n-a,m,a,g((1-h/w)*p));}}};return f});
 });
 
-var testObj = function () {
-  'use strict';
-  console.log("TESSSST!!!");
-};
-
 //ROLLUP PACKAGE ALL VENDORS
-var stats;
-var gui;
-var guiData={testVal:0.1};
+var domMainContainer = document.querySelectorAll('section.main');
+
+var FOV = 75;
+var CAM_NEAR = 0.1;
+var CAM_FAR = 1000;
 var scene;
 var camera;
 var renderer;
@@ -50386,55 +50383,96 @@ var geometry;
 var material;
 var cube;
 
+
+init$1();
+
+function initScene() {
+    scene = new Scene();
+}
+
+function initCamera() {
+    camera = new PerspectiveCamera( FOV, window.innerWidth / window.innerHeight, CAM_NEAR, CAM_FAR );
+    camera.position.z = 5;
+}
+
+function initRender() {
+    renderer = new WebGLRenderer({antialiasing:true});
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.setPixelRatio(window.devicePixelRatio ? window.devicePixelRatio : 1);
+    domMainContainer[0].appendChild( renderer.domElement );
+}
+
+function init$1(){
+
+    initScene();
+    initCamera();
+    initRender();
+
+    geometry = new BoxGeometry( 1, 1, 1 );
+    material = new MeshBasicMaterial( { color: 0x0000ff } );
+    cube = new Mesh( geometry, material );
+    scene.add( cube );
+
+}
+
+function render$1() {
+    cube.rotation.x += 0.1;
+    cube.rotation.y += 0.01;
+    renderer.render(scene, camera);
+}
+
+function windowResizeHandler() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize( window.innerWidth, window.innerHeight );
+}
+
+//ROLLUP PACKAGE ALL VENDORS
+var stats;
+var gui;
+var guiData={testVal:0.1};
+
+
 var init$$1 = function () {
   'use strict';
 
-  stats = new stats_min();
-  document.body.appendChild( stats.dom );
+  initStats();
+  initDatGui();
+  initWindowEvents();
+  render$$1();
 
-  gui = new dat.GUI();
-  gui.add(guiData, 'testVal', -10.0, 10.0);
 
-  scene = new Scene();
-  camera = new PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
-  renderer = new WebGLRenderer({antialiasing:true});
-  renderer.setSize( window.innerWidth, window.innerHeight );
-  renderer.setPixelRatio(window.devicePixelRatio ? window.devicePixelRatio : 1);
-  document.querySelectorAll('section.main')[0].appendChild( renderer.domElement );
-  geometry = new BoxGeometry( 1, 1, 1 );
-  material = new MeshBasicMaterial( { color: 0x0000ff } );
-  cube = new Mesh( geometry, material );
-  scene.add( cube );
-  camera.position.z = 5;
-
-  render();
-  testObj();
-
-  window.addEventListener( 'resize', onWindowResize, false );
 
 };
 
-var render = function () {
+var initStats = function () {
+    stats = new stats_min();
+    document.body.appendChild( stats.dom );
+};
+
+var initDatGui = function () {
+    gui = new dat.GUI();
+    gui.add(guiData, 'testVal', -10.0, 10.0);
+};
+
+var initWindowEvents = function () {
+    window.addEventListener( 'resize', onWindowResize, false );
+};
+
+var render$$1 = function () {
 
   stats.begin();
 
-  cube.rotation.x += 0.1;
-  cube.rotation.y += 0.01;
-
-  renderer.render(scene, camera);
+  render$1();
 
   stats.end();
 
-  requestAnimationFrame( render );
+  requestAnimationFrame( render$$1 );
 
 };
 
 var onWindowResize =function (){
-
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize( window.innerWidth, window.innerHeight );
-
+    windowResizeHandler();
 };
 
 init$$1();
