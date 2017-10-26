@@ -96,11 +96,11 @@ let cache;
 gulp.task('bundleJS', function(){
   return rollup({
     format: "umd", //umd,amd,cjs
-    moduleName: "mainBundle", //only for umd
+    name: "mainBundle", //only for umd
     exports: "named",
-    entry: "./app/javascript/main.js",
-    sourceMap: true,
-    useStrict: true,
+    input: "./app/javascript/main.js",
+    sourcemap: true,
+    strict: true,
     cache: cache,
     plugins: [
       nodeResolve({
